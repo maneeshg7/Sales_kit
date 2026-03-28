@@ -1,50 +1,628 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ashok Leyland Sales Portal</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Ashok Leyland | Sales Executive Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            background-color: #f8fafc;
+            font-family: 'Outfit', 'Calibri', sans-serif;
+            color: #1C1C1C;
+            background-color: #FFFFFF;
+        }
+
+        :root {
+            --primary: #016FB6;
+            --dark: #1C1C1C;
+            --light: #FFFFFF;
+            --gray: #f3f4f6;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: var(--light);
+            border-bottom: 1px solid #e5e7eb;
+            z-index: 50;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .navbar-logo {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            box-shadow: 0 2px 8px rgba(1, 111, 182, 0.3);
+        }
+
+        .navbar-title {
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--primary);
+        }
+
+        .navbar-subtitle {
+            font-size: 12px;
+            color: #6b7280;
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .navbar-subtitle {
+                display: block;
+            }
+        }
+
+        .main-container {
+            display: flex;
+            margin-top: 70px;
+            min-height: calc(100vh - 70px);
+        }
+
+        .sidebar {
+            width: 100%;
+            max-width: 300px;
+            background-color: var(--gray);
+            padding: 2rem 1rem;
+            border-right: 1px solid #e5e7eb;
+            overflow-y: auto;
+            box-shadow: 1px 0 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .sidebar-title {
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .folder-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .folder-item {
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #e5e7eb;
+            background-color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .folder-item:hover {
+            box-shadow: 0 4px 12px rgba(1, 111, 182, 0.15);
+            border-color: var(--primary);
+        }
+
+        .folder-header {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            cursor: pointer;
+            background-color: white;
+            border: none;
+            width: 100%;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 14px;
+            gap: 0.75rem;
+        }
+
+        .folder-header:hover {
+            background-color: #f9fafb;
+            color: var(--primary);
+        }
+
+        .folder-header.active {
+            background: linear-gradient(135deg, var(--primary), #0056a3);
+            color: white;
+        }
+
+        .folder-icon {
+            width: 18px;
+            height: 18px;
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .folder-header.active .folder-icon {
+            transform: rotate(90deg);
+        }
+
+        .folder-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+            background-color: #fafafa;
+        }
+
+        .folder-content.expanded {
+            max-height: 600px;
+            padding: 1rem 0;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            margin: 0.25rem 0.5rem;
+            background-color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+            gap: 0.75rem;
+            font-size: 13px;
+        }
+
+        .file-item:hover {
+            background-color: #e8f4fd;
+            border-color: var(--primary);
+            color: var(--primary);
+            padding-left: 1.25rem;
+            box-shadow: 0 2px 4px rgba(1, 111, 182, 0.1);
+        }
+
+        .file-icon {
+            width: 18px;
+            height: 18px;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        .file-name {
+            flex-grow: 1;
+            font-weight: 500;
+        }
+
+        .file-label {
+            font-size: 10px;
+            background-color: #e8f4fd;
+            color: var(--primary);
+            padding: 3px 8px;
+            border-radius: 4px;
+            white-space: nowrap;
+            font-weight: 700;
+        }
+
+        .file-label.confidential {
+            background-color: #fee2e2;
+            color: #dc2626;
+        }
+
+        .content-area {
+            flex-grow: 1;
+            padding: 2rem;
+            background-color: #fafafa;
+            overflow-y: auto;
+        }
+
+        .content-header {
+            background: linear-gradient(135deg, var(--primary), #0056a3);
+            padding: 2.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            color: white;
+            box-shadow: 0 4px 12px rgba(1, 111, 182, 0.2);
+        }
+
+        .content-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .content-subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .info-box {
+            background-color: white;
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+            font-size: 13px;
+            color: #6b7280;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .info-icon {
+            color: var(--primary);
+            flex-shrink: 0;
+            width: 20px;
+            height: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            border-top: 3px solid var(--primary);
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #6b7280;
+            font-weight: 600;
+        }
+
+        .footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            font-size: 12px;
+            color: #9ca3af;
+            margin-top: 2rem;
+            border-radius: 8px;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .animate-slide-in {
+            animation: slideIn 0.3s ease forwards;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0.75rem 1rem;
+            }
+
+            .navbar-title {
+                font-size: 16px;
+            }
+
+            .main-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                max-width: 100%;
+                border-right: none;
+                border-bottom: 1px solid #e5e7eb;
+            }
+
+            .content-area {
+                padding: 1rem;
+            }
+
+            .content-header {
+                padding: 1.5rem;
+            }
+
+            .content-title {
+                font-size: 24px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                gap: 1rem;
+            }
+
+            .file-item {
+                padding: 0.6rem 0.75rem;
+                font-size: 12px;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--gray);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
         }
     </style>
 </head>
-<body class="flex">
-    <aside class="w-64 bg-white shadow-md h-screen">
-        <div class="px-4 py-6">
-            <h1 class="text-3xl font-bold text-center text-[#016FB6]">Ashok Leyland</h1>
-            <nav class="mt-6">
-                <ul>
-                    <li class="mb-2"><a href="#" class="block text-gray-600 hover:bg-[#016FB6] hover:text-white p-2 rounded">AL Brochures</a></li>
-                    <li class="mb-2"><a href="#" class="block text-gray-600 hover:bg-[#016FB6] hover:text-white p-2 rounded">Competition Brochures</a></li>
-                    <li class="mb-2"><a href="#" class="block text-gray-600 hover:bg-[#016FB6] hover:text-white p-2 rounded">Comparison Analysis</a></li>
-                    <li class="mb-2"><a href="#" class="block text-gray-600 hover:bg-[#016FB6] hover:text-white p-2 rounded">Pricelist</a></li>
-                </ul>
-            </nav>
-        </div>
-    </aside>
-    <main class="flex-1 p-6">
-        <h2 class="text-2xl font-semibold text-[#016FB6]">Welcome to the Ashok Leyland Sales Portal</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
-            <div class="bg-white shadow rounded-lg p-4 transition duration-300 ease-in-out transform hover:scale-105">
-                <h3 class="font-bold text-lg">AL Brochures</h3>
-                <p class="text-gray-600">Find the latest brochures for Ashok Leyland vehicles.</p>
-            </div>
-            <div class="bg-white shadow rounded-lg p-4 transition duration-300 ease-in-out transform hover:scale-105">
-                <h3 class="font-bold text-lg">Competition Brochures</h3>
-                <p class="text-gray-600">Compare our vehicles with competitors’ offerings.</p>
-            </div>
-            <div class="bg-white shadow rounded-lg p-4 transition duration-300 ease-in-out transform hover:scale-105">
-                <h3 class="font-bold text-lg">Comparison Analysis</h3>
-                <p class="text-gray-600">In-depth analysis of our vehicles against others.</p>
-            </div>
-            <div class="bg-white shadow rounded-lg p-4 transition duration-300 ease-in-out transform hover:scale-105">
-                <h3 class="font-bold text-lg">Pricelist</h3>
-                <p class="text-gray-600">View the latest pricing information.</p>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <div class="navbar-logo">AL</div>
+            <div>
+                <div class="navbar-title">ASHOK LEYLAND</div>
+                <div class="navbar-subtitle">Sales Executive Portal</div>
             </div>
         </div>
-    </main>
+    </nav>
+
+    <!-- MAIN CONTAINER -->
+    <div class="main-container">
+        
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                </svg>
+                Resource Library
+            </div>
+            
+            <div class="folder-list">
+                
+                <!-- FOLDER 1: AL BROCHURES -->
+                <div class="folder-item">
+                    <button class="folder-header" onclick="toggleFolder(event, 'al-brochures')">
+                        <i class="folder-icon" data-lucide="folder"></i>
+                        <span>AL Brochures</span>
+                    </button>
+                    <div class="folder-content" id="al-brochures">
+                        <div class="file-item" onclick="downloadFile('AVTR_2820.pdf')">
+                            <i class="file-icon" data-lucide="file-pdf"></i>
+                            <span class="file-name">AVTR 2820</span>
+                            <span class="file-label">PDF</span>
+                        </div>
+                        <div class="file-item" onclick="downloadFile('AVTR_1920.pdf')">
+                            <i class="file-icon" data-lucide="file-pdf"></i>
+                            <span class="file-name">AVTR 1920</span>
+                            <span class="file-label">PDF</span>
+                        </div>
+                        <div class="file-item" onclick="downloadFile('AVTR_2825.pdf')">
+                            <i class="file-icon" data-lucide="file-pdf"></i>
+                            <span class="file-name">AVTR 2825</span>
+                            <span class="file-label">PDF</span>
+                        </div>
+                        <div class="file-item" onclick="downloadFile('AL_Pricelist.xlsx')">
+                            <i class="file-icon" data-lucide="file-spreadsheet"></i>
+                            <span class="file-name">Price List 2024</span>
+                            <span class="file-label">EXCEL</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FOLDER 2: COMPETITION BROCHURES -->
+                <div class="folder-item">
+                    <button class="folder-header" onclick="toggleFolder(event, 'competition-brochures')">
+                        <i class="folder-icon" data-lucide="folder"></i>
+                        <span>Competition Brochures</span>
+                    </button>
+                    <div class="folder-content" id="competition-brochures">
+                        <div class="file-item" onclick="downloadFile('Tata_Prima.pdf')">
+                            <i class="file-icon" data-lucide="file-pdf"></i>
+                            <span class="file-name">Tata Prima G.35K</span>
+                            <span class="file-label">PDF</span>
+                        </div>
+                        <div class="file-item" onclick="downloadFile('BharatBenz_2823R.pdf')">
+                            <i class="file-icon" data-lucide="file-pdf"></i>
+                            <span class="file-name">BharatBenz 2823R</span>
+                            <span class="file-label">PDF</span>
+                        </div>
+                        <div class="file-item" onclick="downloadFile('Hino_700.pdf')">
+                            <i class="file-icon" data-lucide="file-pdf"></i>
+                            <span class="file-name">Hino 700 Series</span>
+                            <span class="file-label">PDF</span>
+                        </div>
+                        <div class="file-item" onclick="downloadFile('Volvo_FH.pdf')">
+                            <i class="file-icon" data-lucide="file-pdf"></i>
+                            <span class="file-name">Volvo FH Series</span>
+                            <span class="file-label">PDF</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FOLDER 3: COMPARISON -->
+                <div class="folder-item">
+                    <button class="folder-header" onclick="toggleFolder(event, 'comparison')">
+                        <i class="folder-icon" data-lucide="folder"></i>
+                        <span>Comparison Analysis</span>
+                    </button>
+                    <div class="folder-content" id="comparison">
+                        <div class="file-item" onclick="downloadFile('AL_vs_Tata.xlsx')">
+                            <i class="file-icon" data-lucide="file-spreadsheet"></i>
+                            <span class="file-name">AL vs Tata Prime</span>
+                            <span class="file-label">EXCEL</span>
+                        </div>
+                        <div class="file-item" onclick="downloadFile('AL_vs_BharatBenz.xlsx')">
+                            <i class="file-icon" data-lucide="file-spreadsheet"></i>
+                            <span class="file-name">AL vs BharatBenz</span>
+                            <span class="file-label">EXCEL</span>
+                        </div>
+                        <div class="file-item" onclick="downloadFile('Technical_Specs.pdf')">
+                            <i class="file-icon" data-lucide="file-pdf"></i>
+                            <span class="file-name">Technical Specs</span>
+                            <span class="file-label">PDF</span>
+                        </div>
+                        <div class="file-item" onclick="downloadFile('Feature_Matrix.pdf')">
+                            <i class="file-icon" data-lucide="file-pdf"></i>
+                            <span class="file-name">Feature Matrix</span>
+                            <span class="file-label">PDF</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FOLDER 4: PRICELIST -->
+                <div class="folder-item">
+                    <button class="folder-header" onclick="toggleFolder(event, 'pricelist')">
+                        <i class="folder-icon" data-lucide="folder"></i>
+                        <span>Pricelist</span>
+                    </button>
+                    <div class="folder-content" id="pricelist">
+                        <div class="file-item" onclick="downloadFile('AL_Internal_Pricing.xlsx')">
+                            <i class="file-icon" data-lucide="lock"></i>
+                            <span class="file-name">AL Internal Pricing</span>
+                            <span class="file-label confidential">CONFIDENTIAL</span>
+                        </div>
+                        <div class="file-item" onclick="downloadFile('Competitor_Pricing.xlsx')">
+                            <i class="file-icon" data-lucide="file-spreadsheet"></i>
+                            <span class="file-name">Competitor Pricing</span>
+                            <span class="file-label">EXCEL</span>
+                        </div>
+                        <div class="file-item" onclick="downloadFile('Regional_Pricing.pdf')">
+                            <i class="file-icon" data-lucide="file-pdf"></i>
+                            <span class="file-name">Regional Pricing</span>
+                            <span class="file-label">PDF</span>
+                        </div>
+                        <div class="file-item" onclick="downloadFile('Discount_Structure.xlsx')">
+                            <i class="file-icon" data-lucide="file-spreadsheet"></i>
+                            <span class="file-name">Discount Structure</span>
+                            <span class="file-label">EXCEL</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </aside>
+
+        <!-- CONTENT AREA -->
+        <main class="content-area">
+            <div class="content-header">
+                <div class="content-title">Welcome, Sales Executive</div>
+                <div class="content-subtitle">Your Resource Portal for Sales Enablement</div>
+            </div>
+
+            <div class="info-box">
+                <svg class="info-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="16" x2="12" y2="12"></line>
+                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                </svg>
+                <span>Click on any folder to expand and view available resources. Select a file to download.</span>
+            </div>
+
+            <div style="margin-top: 2rem;">
+                <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 1.5rem; color: #1C1C1C;">Quick Stats</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">4</div>
+                        <div class="stat-label">Resource Folders</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">16</div>
+                        <div class="stat-label">Total Files</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Updated</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer">
+                <p>© 2024 Ashok Leyland Sales Enablement Portal</p>
+                <p style="margin-top: 0.5rem; font-size: 11px;">Last Updated: March 28, 2024 | Portal v1.0</p>
+            </div>
+        </main>
+
+    </div>
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Toggle Folder Function
+        function toggleFolder(event, folderId) {
+            event.preventDefault();
+            const folderContent = document.getElementById(folderId);
+            const header = event.currentTarget;
+
+            // Close all other folders
+            document.querySelectorAll('.folder-content').forEach(content => {
+                if (content.id !== folderId) {
+                    content.classList.remove('expanded');
+                }
+            });
+            document.querySelectorAll('.folder-header').forEach(h => {
+                if (h !== header) {
+                    h.classList.remove('active');
+                }
+            });
+
+            // Toggle current folder
+            folderContent.classList.toggle('expanded');
+            header.classList.toggle('active');
+
+            // Recreate icons
+            lucide.createIcons();
+        }
+
+        // Download File Function
+        function downloadFile(fileName) {
+            // Replace with actual download logic
+            alert(`📥 Download: ${fileName}\n\nAdd your files to: docs/brochures/${fileName}`);
+            // For actual downloads:
+            // window.location.href = `brochures/${fileName}`;
+        }
+
+        // Auto-expand first folder on load
+        window.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            const firstFolderHeader = document.querySelector('.folder-header');
+            if (firstFolderHeader) {
+                firstFolderHeader.click();
+            }
+        });
+    </script>
+
 </body>
 </html>
