@@ -245,8 +245,22 @@
             font-size: 16px;
         }
 
-        .file-item:hover .delete-btn {
+        .view-btn {
+            color: var(--primary);
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            font-size: 16px;
+            padding: 0 0.25rem;
+        }
+
+        .file-item:hover .delete-btn,
+        .file-item:hover .view-btn {
             opacity: 1;
+        }
+
+        .view-btn:hover {
+            transform: scale(1.2);
         }
 
         .content-area {
@@ -480,6 +494,11 @@
             box-shadow: 0 4px 12px rgba(1, 111, 182, 0.3);
         }
 
+        .btn-primary:disabled {
+            background-color: #cbd5e1;
+            cursor: not-allowed;
+        }
+
         .btn-secondary {
             background-color: #e5e7eb;
             color: var(--dark);
@@ -536,6 +555,105 @@
             }
         }
 
+        /* FILE VIEWER MODAL */
+        .file-viewer-modal {
+            display: none;
+            position: fixed;
+            z-index: 200;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+        }
+
+        .file-viewer-modal.open {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .file-viewer-content {
+            background-color: white;
+            border-radius: 12px;
+            width: 95%;
+            height: 95vh;
+            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.3s ease;
+        }
+
+        .file-viewer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 2px solid var(--primary);
+            background-color: #f9fafb;
+        }
+
+        .file-viewer-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .file-viewer-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .file-viewer-actions button {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .download-btn {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .download-btn:hover {
+            background-color: #0056a3;
+        }
+
+        .close-viewer-btn {
+            background-color: #e5e7eb;
+            color: var(--dark);
+        }
+
+        .close-viewer-btn:hover {
+            background-color: #d1d5db;
+        }
+
+        .file-viewer-body {
+            flex: 1;
+            overflow: auto;
+            background-color: #fafafa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .file-viewer-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+        }
+
         .footer {
             background-color: var(--dark);
             color: white;
@@ -580,6 +698,20 @@
 
             .modal-content {
                 width: 95%;
+            }
+
+            .file-viewer-content {
+                width: 98%;
+                height: 98vh;
+            }
+
+            .file-viewer-actions {
+                flex-wrap: wrap;
+            }
+
+            .file-viewer-actions button {
+                font-size: 12px;
+                padding: 0.4rem 0.8rem;
             }
         }
 
@@ -645,12 +777,12 @@
                         <span>AL Brochures</span>
                     </button>
                     <div class="folder-content" id="al-brochures">
-                        <div class="file-item" onclick="downloadFile('1774698558827-jphs form receipt.pdf')">
+                        <div class="file-item" onclick="openPdfViewer({name: 'AVTR 2820', githubUrl: 'https://raw.githubusercontent.com/maneeshg7/Sales_kit/main/brochures/al-brochures/sample.pdf', type: 'application/pdf', fileName: 'AVTR_2820.pdf'})">
                             <i class="file-icon" data-lucide="file-pdf"></i>
-                            <span class="file-name">JPHS RECEIPT</span>
+                            <span class="file-name">AVTR 2820</span>
                             <span class="file-label">PDF</span>
                         </div>
-                        <div class="file-item" onclick="downloadFile('AVTR_1920.pdf')">
+                        <div class="file-item" onclick="openPdfViewer({name: 'AVTR 1920', githubUrl: 'https://raw.githubusercontent.com/maneeshg7/Sales_kit/main/brochures/al-brochures/sample.pdf', type: 'application/pdf', fileName: 'AVTR_1920.pdf'})">
                             <i class="file-icon" data-lucide="file-pdf"></i>
                             <span class="file-name">AVTR 1920</span>
                             <span class="file-label">PDF</span>
@@ -665,7 +797,7 @@
                         <span>Competition Brochures</span>
                     </button>
                     <div class="folder-content" id="competition-brochures">
-                        <div class="file-item" onclick="downloadFile('Tata_Prima.pdf')">
+                        <div class="file-item" onclick="openPdfViewer({name: 'Tata Prima G.35K', githubUrl: 'https://raw.githubusercontent.com/maneeshg7/Sales_kit/main/brochures/competition-brochures/sample.pdf', type: 'application/pdf', fileName: 'Tata_Prima.pdf'})">
                             <i class="file-icon" data-lucide="file-pdf"></i>
                             <span class="file-name">Tata Prima G.35K</span>
                             <span class="file-label">PDF</span>
@@ -680,7 +812,7 @@
                         <span>Comparison Analysis</span>
                     </button>
                     <div class="folder-content" id="comparison">
-                        <div class="file-item" onclick="downloadFile('AL_vs_Competitors.xlsx')">
+                        <div class="file-item" onclick="openPdfViewer({name: 'AL vs Competitors', githubUrl: 'https://docs.google.com/viewer?url=https://raw.githubusercontent.com/maneeshg7/Sales_kit/main/brochures/comparison/sample.xlsx&embedded=true', type: 'application/vnd.ms-excel', fileName: 'AL_vs_Competitors.xlsx'})">
                             <i class="file-icon" data-lucide="file-spreadsheet"></i>
                             <span class="file-name">AL vs Competitors</span>
                             <span class="file-label">EXCEL</span>
@@ -695,7 +827,7 @@
                         <span>Pricelist</span>
                     </button>
                     <div class="folder-content" id="pricelist">
-                        <div class="file-item" onclick="downloadFile('AL_Pricing.xlsx')">
+                        <div class="file-item" onclick="openPdfViewer({name: 'AL Internal Pricing', githubUrl: 'https://docs.google.com/viewer?url=https://raw.githubusercontent.com/maneeshg7/Sales_kit/main/brochures/pricelist/sample.xlsx&embedded=true', type: 'application/vnd.ms-excel', fileName: 'AL_Pricing.xlsx'})">
                             <i class="file-icon" data-lucide="lock"></i>
                             <span class="file-name">AL Internal Pricing</span>
                             <span class="file-label confidential">CONFIDENTIAL</span>
@@ -719,7 +851,7 @@
                     <line x1="12" y1="16" x2="12" y2="12"></line>
                     <line x1="12" y1="8" x2="12.01" y2="8"></line>
                 </svg>
-                <span>Click on any folder to expand and view available resources. Use the "Upload Brochure" button to add new files.</span>
+                <span>Click on any file to view it. Use the "Upload Brochure" button to add new files.</span>
             </div>
 
             <div style="margin-top: 2rem;">
@@ -805,6 +937,35 @@
         </div>
     </div>
 
+    <!-- FILE VIEWER MODAL -->
+    <div class="file-viewer-modal" id="fileViewerModal">
+        <div class="file-viewer-content">
+            <div class="file-viewer-header">
+                <div class="file-viewer-title" id="viewerTitle">File Viewer</div>
+                <div class="file-viewer-actions">
+                    <button class="download-btn" onclick="downloadCurrentFile()" title="Download">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        Download
+                    </button>
+                    <button class="close-viewer-btn" onclick="closeFileViewer()" title="Close">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                        Close
+                    </button>
+                </div>
+            </div>
+            <div class="file-viewer-body">
+                <iframe id="fileViewerFrame" class="file-viewer-iframe"></iframe>
+            </div>
+        </div>
+    </div>
+
     <script>
     // Initialize Lucide Icons
     lucide.createIcons();
@@ -817,13 +978,52 @@
         token: localStorage.getItem('github_token') || null
     };
 
-    // Base URL for raw GitHub content
-    const GITHUB_RAW_URL = 'https://raw.githubusercontent.com/maneeshg7/Sales_kit/main/brochures';
-
     // Store files metadata
     let uploadedFiles = JSON.parse(localStorage.getItem('uploadedFiles')) || {};
+    let currentViewingFile = null;
 
-    // Toggle Folder
+    // ===== FILE VIEWER FUNCTIONS =====
+    function openPdfViewer(file) {
+        currentViewingFile = file;
+        const viewerFrame = document.getElementById('fileViewerFrame');
+        const viewerTitle = document.getElementById('viewerTitle');
+        
+        viewerTitle.textContent = file.name;
+        
+        // For PDFs, embed directly
+        if (file.type.includes('pdf') || file.githubUrl.includes('.pdf')) {
+            viewerFrame.src = file.githubUrl;
+        } else {
+            // For other file types (Excel, Word, etc.), use Google Docs Viewer
+            viewerFrame.src = `https://docs.google.com/viewer?url=${encodeURIComponent(file.githubUrl)}&embedded=true`;
+        }
+        
+        document.getElementById('fileViewerModal').classList.add('open');
+    }
+
+    function closeFileViewer() {
+        document.getElementById('fileViewerModal').classList.remove('open');
+        document.getElementById('fileViewerFrame').src = '';
+        currentViewingFile = null;
+    }
+
+    function downloadCurrentFile() {
+        if (currentViewingFile) {
+            const link = document.createElement('a');
+            link.href = currentViewingFile.githubUrl;
+            link.download = currentViewingFile.fileName;
+            link.click();
+        }
+    }
+
+    // Close viewer when clicking outside
+    document.getElementById('fileViewerModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeFileViewer();
+        }
+    });
+
+    // ===== FOLDER TOGGLE =====
     function toggleFolder(event, folderId) {
         event.preventDefault();
         const folderContent = document.getElementById(folderId);
@@ -845,10 +1045,10 @@
         lucide.createIcons();
     }
 
-    // Upload Modal Functions
+    // ===== UPLOAD MODAL FUNCTIONS =====
     function openUploadModal() {
         if (!GITHUB_CONFIG.token) {
-            const token = prompt('Enter your GitHub Personal Access Token:\n\n(Create at: https://github.com/settings/tokens)');
+            const token = prompt('Enter your GitHub Personal Access Token:\n\n(Create at: https://github.com/settings/tokens)\n\nScopes needed: repo (full control of repositories)');
             if (!token) return;
             localStorage.setItem('github_token', token);
             GITHUB_CONFIG.token = token;
@@ -863,7 +1063,6 @@
         document.getElementById('successMessage').classList.remove('show');
     }
 
-    // Show File Name
     function showFileName(input) {
         const display = document.getElementById('fileNameDisplay');
         if (input.files && input.files[0]) {
@@ -873,7 +1072,7 @@
         }
     }
 
-    // Upload to GitHub
+    // ===== UPLOAD TO GITHUB =====
     async function uploadToGitHub(fileName, fileContent, folder) {
         try {
             const timestamp = Date.now();
@@ -916,7 +1115,7 @@
         }
     }
 
-    // Handle Upload
+    // ===== HANDLE UPLOAD =====
     async function handleUpload(event) {
         event.preventDefault();
 
@@ -930,7 +1129,6 @@
             return;
         }
 
-        // Check file size (GitHub has 100MB limit)
         if (file.size > 100 * 1024 * 1024) {
             alert('File size exceeds 100MB limit');
             return;
@@ -947,12 +1145,10 @@
         submitBtn.textContent = 'Uploading...';
 
         try {
-            // Read file as base64
             const reader = new FileReader();
             reader.onload = async function(e) {
-                const fileContent = e.target.result.split(',')[1]; // Get base64 content
+                const fileContent = e.target.result.split(',')[1];
 
-                // Simulate progress
                 let progress = 20;
                 const progressInterval = setInterval(() => {
                     progress += Math.random() * 20;
@@ -960,14 +1156,12 @@
                     progressFill.style.width = progress + '%';
                 }, 300);
 
-                // Upload to GitHub
                 const result = await uploadToGitHub(file.name, fileContent, folder);
 
                 clearInterval(progressInterval);
                 progressFill.style.width = '100%';
 
                 if (result.success) {
-                    // Store metadata in localStorage
                     if (!uploadedFiles[folder]) {
                         uploadedFiles[folder] = [];
                     }
@@ -988,7 +1182,6 @@
                     uploadedFiles[folder].push(fileData);
                     localStorage.setItem('uploadedFiles', JSON.stringify(uploadedFiles));
 
-                    // Show success
                     successMessage.innerHTML = '✓ File uploaded to GitHub successfully!';
                     successMessage.classList.add('show');
 
@@ -1015,7 +1208,7 @@
         }
     }
 
-    // Refresh File List
+    // ===== REFRESH FILE LIST =====
     function refreshFileList() {
         const folders = ['al-brochures', 'competition-brochures', 'comparison', 'pricelist'];
         
@@ -1036,7 +1229,7 @@
         lucide.createIcons();
     }
 
-    // Create File Element
+    // ===== CREATE FILE ELEMENT (NO DELETE BUTTON) =====
     function createFileElement(file, folderId) {
         const fileItem = document.createElement('div');
         fileItem.className = 'file-item uploaded';
@@ -1044,64 +1237,20 @@
             <i class="file-icon" data-lucide="${file.type.includes('pdf') ? 'file-pdf' : 'file-spreadsheet'}"></i>
             <span class="file-name">${file.name}</span>
             <span class="file-label">${file.type.includes('pdf') ? 'PDF' : 'FILE'}</span>
-            <span class="delete-btn" onclick="deleteFile('${folderId}', ${file.id})">✕</span>
+            <span class="view-btn" onclick="openPdfViewer({name: '${file.name}', githubUrl: '${file.githubUrl}', type: '${file.type}', fileName: '${file.fileName}'})">👁️</span>
         `;
-        fileItem.onclick = (e) => {
-            if (!e.target.classList.contains('delete-btn')) {
-                downloadUploadedFile(file);
-            }
+        fileItem.ondblclick = () => {
+            openPdfViewer({
+                name: file.name,
+                githubUrl: file.githubUrl,
+                type: file.type,
+                fileName: file.fileName
+            });
         };
         return fileItem;
     }
 
-    // Download Uploaded File
-    function downloadUploadedFile(file) {
-        // Open GitHub raw content in new tab
-        window.open(file.githubUrl, '_blank');
-    }
-
-    // Delete File from GitHub
-    async function deleteFile(folderId, fileId) {
-        if (!confirm('Are you sure you want to delete this file?')) return;
-
-        const file = uploadedFiles[folderId].find(f => f.id === fileId);
-        if (!file) return;
-
-        try {
-            const url = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${file.path}`;
-            
-            const response = await fetch(url, {
-                method: 'DELETE',
-                headers: {
-                    'Authorization': `token ${GITHUB_CONFIG.token}`,
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    message: `Delete ${file.fileName}`,
-                    sha: file.sha,
-                    branch: GITHUB_CONFIG.branch
-                })
-            });
-
-            if (response.ok) {
-                uploadedFiles[folderId] = uploadedFiles[folderId].filter(f => f.id !== fileId);
-                localStorage.setItem('uploadedFiles', JSON.stringify(uploadedFiles));
-                refreshFileList();
-                alert('✓ File deleted from GitHub');
-            } else {
-                alert('Error deleting file');
-            }
-        } catch (error) {
-            alert('Error: ' + error.message);
-        }
-    }
-
-    // Download Sample File
-    function downloadFile(fileName) {
-        alert(`📥 Download: ${fileName}\n\nNote: Add actual files using the "Upload Brochure" button.`);
-    }
-
-    // Reset Form
+    // ===== RESET FORM =====
     function resetForm() {
         document.getElementById('uploadForm').reset();
         document.getElementById('fileNameDisplay').style.display = 'none';
@@ -1109,7 +1258,7 @@
         document.getElementById('progressFill').style.width = '0%';
     }
 
-    // Update Stats
+    // ===== UPDATE STATS =====
     function updateStats() {
         let totalFiles = 0;
         let totalSize = 0;
@@ -1128,19 +1277,28 @@
         document.getElementById('lastUpdate').textContent = new Date().toLocaleString();
     }
 
-    // Load files on page load
+    // ===== INITIALIZE =====
     window.addEventListener('DOMContentLoaded', () => {
         refreshFileList();
         const firstFolder = document.querySelector('.folder-header');
         if (firstFolder) firstFolder.click();
     });
 
-    // Close modal when clicking outside
+    // Close upload modal when clicking outside
     document.getElementById('uploadModal').addEventListener('click', function(e) {
         if (e.target === this) {
             closeUploadModal();
         }
     });
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeFileViewer();
+            closeUploadModal();
+        }
+    });
 </script>
+
 </body>
 </html>
