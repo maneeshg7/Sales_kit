@@ -3,39 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ashok Leyland Sales Executive Portal</title>
+    <title>Ashok Leyland Sales Portal</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
-        body { font-family: Arial, sans-serif; margin: 0; }
-        .folder { cursor: pointer; padding: 10px; border: 1px solid #ddd; margin: 5px; }
-        .content { display: none; margin-left: 20px; }
-        .link { display: block; padding: 5px; margin: 2px 0; color: blue; text-decoration: none; }
-        .link:hover { text-decoration: underline; }
+        body {
+            background-color: #f8fafc;
+        }
     </style>
 </head>
-<body>
-    <h1>Ashok Leyland Sales Executive Portal</h1>
-    <div class="folder" onclick="toggleFolder('sales')">Sales</div>
-    <div class="content" id="sales">
-        <div class="folder" onclick="toggleFolder('leads')">Leads</div>
-        <div class="content" id="leads">
-            <a href="leads/list.pdf" class="link">View Leads List</a>
-            <a href="leads/guidelines.pdf" class="link">Leads Guidelines</a>
+<body class="flex">
+    <aside class="w-64 bg-white shadow-md h-screen">
+        <div class="px-4 py-6">
+            <h1 class="text-3xl font-bold text-center text-[#016FB6]">Ashok Leyland</h1>
+            <nav class="mt-6">
+                <ul>
+                    <li class="mb-2"><a href="#" class="block text-gray-600 hover:bg-[#016FB6] hover:text-white p-2 rounded">AL Brochures</a></li>
+                    <li class="mb-2"><a href="#" class="block text-gray-600 hover:bg-[#016FB6] hover:text-white p-2 rounded">Competition Brochures</a></li>
+                    <li class="mb-2"><a href="#" class="block text-gray-600 hover:bg-[#016FB6] hover:text-white p-2 rounded">Comparison Analysis</a></li>
+                    <li class="mb-2"><a href="#" class="block text-gray-600 hover:bg-[#016FB6] hover:text-white p-2 rounded">Pricelist</a></li>
+                </ul>
+            </nav>
         </div>
-        <div class="folder" onclick="toggleFolder('reports')">Reports</div>
-        <div class="content" id="reports">
-            <a href="reports/monthly_report.pdf" class="link">Monthly Report</a>
-            <a href="reports/annual_report.pdf" class="link">Annual Report</a>
+    </aside>
+    <main class="flex-1 p-6">
+        <h2 class="text-2xl font-semibold text-[#016FB6]">Welcome to the Ashok Leyland Sales Portal</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
+            <div class="bg-white shadow rounded-lg p-4 transition duration-300 ease-in-out transform hover:scale-105">
+                <h3 class="font-bold text-lg">AL Brochures</h3>
+                <p class="text-gray-600">Find the latest brochures for Ashok Leyland vehicles.</p>
+            </div>
+            <div class="bg-white shadow rounded-lg p-4 transition duration-300 ease-in-out transform hover:scale-105">
+                <h3 class="font-bold text-lg">Competition Brochures</h3>
+                <p class="text-gray-600">Compare our vehicles with competitors’ offerings.</p>
+            </div>
+            <div class="bg-white shadow rounded-lg p-4 transition duration-300 ease-in-out transform hover:scale-105">
+                <h3 class="font-bold text-lg">Comparison Analysis</h3>
+                <p class="text-gray-600">In-depth analysis of our vehicles against others.</p>
+            </div>
+            <div class="bg-white shadow rounded-lg p-4 transition duration-300 ease-in-out transform hover:scale-105">
+                <h3 class="font-bold text-lg">Pricelist</h3>
+                <p class="text-gray-600">View the latest pricing information.</p>
+            </div>
         </div>
-    </div>
-    <script>
-        function toggleFolder(id) {
-            var content = document.getElementById(id);
-            if (content.style.display === "none" || content.style.display === "") {
-                content.style.display = "block";
-            } else {
-                content.style.display = "none";
-            }
-        }
-    </script>
+    </main>
 </body>
 </html>
