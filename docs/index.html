@@ -3,26 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
-    <title>Sales Kit</title>
+    <title>Ashok Leyland Brochure</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/lucide-icons"></script>
 </head>
-<body>
-    <header>
-        <h1>Welcome to Our Sales Kit</h1>
-    </header>
-    <main>
-        <h2>Upload Brochure</h2>
-        <button onclick="openModal()">Upload Brochure</button>
-
-        <div id="upload-modal" class="modal">
-            <div class="modal-content">
-                <span class="close" onclick="closeModal()">&times;</span>
-                <h2>Upload Brochure</h2>
-                <input type="file" id="brochure-file">
-                <button onclick="uploadBrochure()">Upload</button>
+<body class="bg-gray-100">
+    <nav class="bg-white shadow">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between">
+            <div class="text-lg font-semibold">Ashok Leyland</div>
+            <div class="space-x-4">
+                <a href="#brochures" class="text-gray-600 hover:text-gray-900">Brochures</a>
+                <a href="#comparison" class="text-gray-600 hover:text-gray-900">Comparison</a>
+                <a href="#competition" class="text-gray-600 hover:text-gray-900">Competition</a>
+                <a href="#pricing" class="text-gray-600 hover:text-gray-900">Pricing</a>
+                <button id="uploadBtn" class="bg-blue-500 text-white px-4 py-2 rounded">Admin Upload</button>
             </div>
         </div>
+    </nav>
+    
+    <main class="py-10">
+        <section id="brochures" class="max-w-7xl mx-auto px-4">
+            <h2 class="text-2xl font-bold mb-6">Brochures</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <!-- Replace with actual brochure links -->
+                <div class="border rounded-lg p-4">
+                    <h3 class="font-semibold">Brochure 1</h3>
+                    <p>A brief description of brochure 1</p>
+                </div>
+                <div class="border rounded-lg p-4">
+                    <h3 class="font-semibold">Brochure 2</h3>
+                    <p>A brief description of brochure 2</p>
+                </div>
+                <!-- Add more brochures as necessary -->
+            </div>
+        </section>
+
+        <section id="comparison" class="max-w-7xl mx-auto px-4 mt-10">
+            <h2 class="text-2xl font-bold mb-6">Comparison Table</h2>
+            <table class="min-w-full border">
+                <thead>
+                    <tr class="bg-gray-200">
+                        <th class="px-4 py-2">Model</th>
+                        <th class="px-4 py-2">Price</th>
+                        <th class="px-4 py-2">Features</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="border px-4 py-2">Model A</td>
+                        <td class="border px-4 py-2">$XX,XXX</td>
+                        <td class="border px-4 py-2">Feature details...</td>
+                    </tr>
+                    <tr>
+                        <td class="border px-4 py-2">Model B</td>
+                        <td class="border px-4 py-2">$XX,XXX</td>
+                        <td class="border px-4 py-2">Feature details...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="competition" class="max-w-7xl mx-auto px-4 mt-10">
+            <h2 class="text-2xl font-bold mb-6">Competition Library</h2>
+            <div>
+                <p>Competitor information here...</p>
+            </div>
+        </section>
+
+        <section id="pricing" class="max-w-7xl mx-auto px-4 mt-10">
+            <h2 class="text-2xl font-bold mb-6">Pricing</h2>
+            <div>
+                <p>Pricing details and packages...</p>
+            </div>
+        </section>
     </main>
-    <script src="js/script.js"></script>
+
+    <footer class="bg-white shadow mt-10">
+        <div class="max-w-7xl mx-auto px-4 py-4 text-center">
+            <p>&copy; 2026 Ashok Leyland. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Admin Upload Modal -->
+    <div id="uploadModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+        <div class="bg-white rounded-lg p-6 w-11/12 md:w-1/3">
+            <h3 class="text-lg font-semibold mb-4">Upload Brochure</h3>
+            <form>
+                <input type="file" class="border rounded p-2 mb-4 w-full" required>
+                <div class="flex justify-end">
+                    <button type="button" class="bg-gray-300 px-4 py-2 mr-2 rounded" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Upload</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('uploadBtn').addEventListener('click', function() {
+            document.getElementById('uploadModal').classList.remove('hidden');
+        });
+
+        function closeModal() {
+            document.getElementById('uploadModal').classList.add('hidden');
+        }
+    </script>
 </body>
 </html>
