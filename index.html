@@ -3,84 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ashok Leyland Brochure</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Ashok Leyland Sales Executive Portal</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; }
+        .folder { cursor: pointer; padding: 10px; border: 1px solid #ddd; margin: 5px; }
+        .content { display: none; margin-left: 20px; }
+        .link { display: block; padding: 5px; margin: 2px 0; color: blue; text-decoration: none; }
+        .link:hover { text-decoration: underline; }
+    </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="#brochures">Brochures</a></li>
-                <li><a href="#comparison">Comparison</a></li>
-                <li><a href="#competition">Competition</a></li>
-                <li><a href="#pricing">Pricing</a></li>
-                <li><a href="#admin-upload">Admin Upload</a></li>
-            </ul>
-        </nav>
-    </header>
-    
-    <main>
-        <section id="brochures">
-            <h2>Brochures</h2>
-            <div class="brochures-grid">
-                <!-- Example brochure items -->
-                <div class="brochure">
-                    <h3>Brochure 1</h3>
-                    <p>Details about brochure 1.</p>
-                </div>
-                <div class="brochure">
-                    <h3>Brochure 2</h3>
-                    <p>Details about brochure 2.</p>
-                </div>
-                <!-- Add more brochures as needed -->
-            </div>
-        </section>
-
-        <section id="comparison">
-            <h2>Comparison Table</h2>
-            <table>
-                <tr>
-                    <th>Model</th>
-                    <th>Feature 1</th>
-                    <th>Feature 2</th>
-                </tr>
-                <tr>
-                    <td>Model A</td>
-                    <td>Value A1</td>
-                    <td>Value A2</td>
-                </tr>
-                <tr>
-                    <td>Model B</td>
-                    <td>Value B1</td>
-                    <td>Value B2</td>
-                </tr>
-                <!-- Add more models as needed -->
-            </table>
-        </section>
-
-        <section id="competition">
-            <h2>Competition</h2>
-            <p>Description of competition.</p>
-        </section>
-
-        <section id="pricing">
-            <h2>Pricing</h2>
-            <p>Details about pricing options.</p>
-        </section>
-
-        <section id="admin-upload">
-            <h2>Admin Upload</h2>
-            <form action="#" method="POST">
-                <input type="file" name="brochure" required>
-                <button type="submit">Upload Brochure</button>
-            </form>
-        </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2026 Ashok Leyland. All rights reserved.</p>
-    </footer>
-
-    <script src="script.js"></script>
+    <h1>Ashok Leyland Sales Executive Portal</h1>
+    <div class="folder" onclick="toggleFolder('sales')">Sales</div>
+    <div class="content" id="sales">
+        <div class="folder" onclick="toggleFolder('leads')">Leads</div>
+        <div class="content" id="leads">
+            <a href="leads/list.pdf" class="link">View Leads List</a>
+            <a href="leads/guidelines.pdf" class="link">Leads Guidelines</a>
+        </div>
+        <div class="folder" onclick="toggleFolder('reports')">Reports</div>
+        <div class="content" id="reports">
+            <a href="reports/monthly_report.pdf" class="link">Monthly Report</a>
+            <a href="reports/annual_report.pdf" class="link">Annual Report</a>
+        </div>
+    </div>
+    <script>
+        function toggleFolder(id) {
+            var content = document.getElementById(id);
+            if (content.style.display === "none" || content.style.display === "") {
+                content.style.display = "block";
+            } else {
+                content.style.display = "none";
+            }
+        }
+    </script>
 </body>
 </html>
