@@ -264,20 +264,45 @@
         }
 
         .content-area {
-            flex-grow: 1;
-            padding: 2rem;
-            background-color: #fafafa;
-            overflow-y: auto;
-        }
+    flex-grow: 1;
+    padding: 2rem;
+    background-color: #fafafa;
+    overflow-y: auto;
+    background-image: url('https://raw.githubusercontent.com/maneeshg7/Sales_kit/main/docs/ashok-leyland-vehicles.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    position: relative;
+}
 
-        .content-header {
-            background: linear-gradient(135deg, var(--primary), #0056a3);
-            padding: 2.5rem;
-            border-radius: 12px;
-            margin-bottom: 2rem;
-            color: white;
-            box-shadow: 0 4px 12px rgba(1, 111, 182, 0.2);
-        }
+/* Add overlay to make content readable */
+.content-area::before {
+    content: '';
+    position: fixed;
+    top: 70px;
+    left: 300px;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.85);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.content-area > * {
+    position: relative;
+    z-index: 1;
+}
+
+       .content-header {
+    background: linear-gradient(135deg, var(--primary), #0056a3);
+    padding: 2.5rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    color: white;
+    box-shadow: 0 4px 12px rgba(1, 111, 182, 0.2);
+    position: relative;
+    z-index: 2;
+}
 
         .content-title {
             font-size: 32px;
@@ -290,33 +315,52 @@
             opacity: 0.9;
         }
 
-        .info-box {
-            background-color: white;
-            border-left: 4px solid var(--primary);
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin-top: 1.5rem;
-            font-size: 13px;
-            color: #6b7280;
-            display: flex;
-            gap: 1rem;
-        }
+       .info-box {
+    background-color: white;
+    border-left: 4px solid var(--primary);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-top: 1.5rem;
+    font-size: 13px;
+    color: #6b7280;
+    display: flex;
+    gap: 1rem;
+    position: relative;
+    z-index: 2;
+}
+
+.footer {
+    background-color: var(--dark);
+    color: white;
+    padding: 2rem;
+    text-align: center;
+    font-size: 12px;
+    color: #9ca3af;
+    margin-top: 2rem;
+    border-radius: 8px;
+    position: relative;
+    z-index: 2;
+}
 
         .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+    position: relative;
+    z-index: 2;
+}
 
-        .stat-card {
-            background-color: white;
-            padding: 1.5rem;
-            border-radius: 8px;
-            text-align: center;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-            border-top: 3px solid var(--primary);
-        }
+.stat-card {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border-top: 3px solid var(--primary);
+    position: relative;
+    z-index: 2;
+}
 
         .stat-number {
             font-size: 28px;
@@ -331,6 +375,13 @@
             font-weight: 600;
         }
 
+        @media (max-width: 768px) {
+    .content-area::before {
+        left: 0;
+    }
+    
+    /* Rest of existing mobile styles */
+}
         /* Modal Styles */
         .modal {
             display: none;
@@ -738,6 +789,7 @@
     <!-- NAVBAR -->
     <nav class="navbar">
         <div class="navbar-brand">
+            <a href="https://www.ashokleyland.com/in/lightvehicles" target="_blank" rel="noopener noreferrer" style="text-decoration: none; display: flex; align-items: center; gap: 1rem;">
             <div class="navbar-logo">AL</div>
             <div>
                 <div class="navbar-title">ASHOK LEYLAND</div>
@@ -777,7 +829,7 @@
                         <span>AL Brochures</span>
                     </button>
                     <div class="folder-content" id="al-brochures">
-                        <div class="file-item" onclick="openPdfViewer({name: 'JPHS RECEIPT', githubUrl: 'https://raw.githubusercontent.com/maneeshg7/Sales_kit/main/brochures/al-brochures/1774698558827-jphs form receipt.pdf', type: 'application/pdf', fileName: '1774698558827-jphs form receipt.pdf'})">
+                        <div class="file-item" onclick="openPdfViewer({name: 'JPHS RECEIPT', githubUrl: 'https://raw.githubusercontent.com/maneeshg7/Sales_kit/main/brochures/al-brochures/1774698558827-jphs%20form%20receipt.pdf', type: 'application/pdf', fileName: '1774698558827-jphs form receipt.pdf'})">
                             <i class="file-icon" data-lucide="file-pdf"></i>
                             <span class="file-name">JPHS RECEIPT</span>
                             <span class="file-label">PDF</span>
