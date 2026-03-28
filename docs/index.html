@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Sales Kit</title>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Our Sales Kit</h1>
+    </header>
+    <main>
+        <h2>Upload Brochure</h2>
+        <button onclick="openModal()">Upload Brochure</button>
+
+        <div id="upload-modal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h2>Upload Brochure</h2>
+                <input type="file" id="brochure-file">
+                <button onclick="uploadBrochure()">Upload</button>
+            </div>
+        </div>
+    </main>
+    <script src="js/script.js"></script>
+</body>
+</html>
