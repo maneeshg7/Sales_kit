@@ -1061,7 +1061,7 @@
         viewerTitle.textContent = file.name;
         
         // For PDFs, embed directly
-        if (file.name.endsWith('.pdf') || (file.type.includes('pdf') || file.githubUrl.includes('.pdf')) {
+        if (file.type.includes('pdf') || file.githubUrl.includes('.pdf')) {
             viewerFrame.src = file.githubUrl;
         } else {
             // For other file types (Excel, Word, etc.), use Google Docs Viewer
